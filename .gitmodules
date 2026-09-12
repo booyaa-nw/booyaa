@@ -1,3 +1,6 @@
 [submodule "tools/common"]
 	path = tools/common
 	url = https://github.com/booyaa-nw/common.git
+[submodule "tools/ipcalc"]
+	path = tools/ipcalc
+	url = https://github.com/booyaa-nw/ipcalc.git
