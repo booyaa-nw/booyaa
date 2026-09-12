@@ -1,0 +1,12 @@
+[project]
+name = "booyaa"
+version = "0.1.0"
+description = "NWエンジニア用ツール群 - uv workspace ルート"
+requires-python = ">=3.14"
+dependencies = []
+
+[tool.uv.workspace]
+members = ["tools/*"]
+
+[tool.uv]
+package = false

@@ -1,0 +1,32 @@
+# --- Windows ---
+Thumbs.db
+Desktop.ini
+*:Zone.Identifier
+$RECYCLE.BIN/
+
+# --- 一時ファイル (どの階層でも) ---
+**/tmp/
+
+# --- Python / uv ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+dist/
+build/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# --- 秘匿情報 ---
+.env
+.env.*
+*.local
+
+# --- bin/ は .venv/Scripts への Junction。管理対象外 ---
+/bin/
