@@ -4,3 +4,6 @@
 [submodule "tools/ipcalc"]
 	path = tools/ipcalc
 	url = https://github.com/booyaa-nw/ipcalc.git
+[submodule "tools/mping"]
+	path = tools/mping
+	url = https://github.com/booyaa-nw/mping.git
