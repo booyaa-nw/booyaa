@@ -15,6 +15,15 @@
 
 .EXAMPLE
     ./bootstrap.ps1
+
+.NOTES
+    Linux/Unix環境（特にRaspberry Pi等のARM機）でpwshのインストールを避けたい場合は、
+    このスクリプトの代わりに bootstrap.sh（bash専用、pwsh不要）を使うこと:
+        bash ./bootstrap.sh
+    このファイルのLinux分岐（pwshで実行した場合）と bootstrap.sh / scripts/update-bin.sh
+    は同じ結果になるよう設計しているが、実装は別ファイルなので、どちらか一方を修正した
+    場合はもう一方にも同じ修正を反映すること（2026-09-13、bootstrap.sh追加時に発生した
+    保守上の注意点）。
 #>
 
 [CmdletBinding()]

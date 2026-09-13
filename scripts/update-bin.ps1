@@ -29,13 +29,22 @@
     更新される。もう一方のOS用サブディレクトリが（別マシンでの実行結果や共有領域経由で）既に
     存在していても、そちらには触れない。
 
-    【注意】PowerShellの仕様上、PATHに追加していても .ps1 はコマンド名だけでは実行できない
-    （.exe/.cmd/.bat と違い、拡張子の自動解決対象に含まれないため）。
-    `ipcalc` ではなく `ipcalc.ps1` のように拡張子まで入力する必要がある
-    （もしくは各自のPowerShellプロファイルにラッパー関数/エイリアスを定義する）。
+    【2026-09-12訂正】以前は「PowerShellでは.ps1はコマンド名だけでは実行できず、拡張子まで
+    入力する必要がある」という制約があるとしていたが、これは誤りだった。bin/windowsをPATHに
+    追加していれば、cmd.exeのPATHEXTとは別のPowerShell自身のコマンド解決の仕組みにより、
+    `ipcalc.ps1` ではなく `ipcalc` と拡張子なしで入力するだけで実行できることを実機で確認した
+    （PowerShellが.ps1を実行できないのはカレントディレクトリ上のスクリプトを`.\`無しで
+    実行しようとした場合の制限であり、PATHに登録済みのディレクトリには適用されない）。
 
 .EXAMPLE
     ./scripts/update-bin.ps1
+
+.NOTES
+    Linux/Unix環境（特にRaspberry Pi等のARM機）でpwshのインストールを避けたい場合は、
+    このスクリプトの代わりに scripts/update-bin.sh（bash専用、pwsh不要）を使うこと。
+    通常はbootstrap.sh経由で自動的に呼ばれる。このファイルのLinux分岐と
+    scripts/update-bin.sh は同じ結果になるよう設計しているが実装は別ファイルなので、
+    どちらか一方を修正した場合はもう一方にも同じ修正を反映すること（2026-09-13追記）。
 #>
 
 [CmdletBinding()]
@@ -186,12 +195,6 @@ $LASTEXITCODE = 0
 Write-Host ""
 Write-Host "完了: ./bin/$osSubdir に $generatedCount / $($commands.Count) 個のコマンドシムを生成しました。" -ForegroundColor Green
 Write-Host "  (python / pip / activate 等はここには含まれず、システムのPATHには影響しません)"
-if ($onWindows) {
-    Write-Host ""
-    Write-Host "  [注意] PowerShellの仕様上、.ps1 はコマンド名だけでは実行できません。" -ForegroundColor Yellow
-    Write-Host "  'ipcalc' ではなく 'ipcalc.ps1' のように拡張子まで入力してください" -ForegroundColor Yellow
-    Write-Host "  (もしくは各自のPowerShellプロファイルにラッパー関数/エイリアスを定義してください)。" -ForegroundColor Yellow
-}
 Write-Host ""
 
 exit 0

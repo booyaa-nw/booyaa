@@ -1,3 +1,6 @@
+# --- local ---
+booyaa_log/
+
 # --- Windows ---
 Thumbs.db
 Desktop.ini
