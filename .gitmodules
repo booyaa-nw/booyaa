@@ -7,3 +7,6 @@
 [submodule "tools/mping"]
 	path = tools/mping
 	url = https://github.com/booyaa-nw/mping.git
+[submodule "tools/net_config"]
+	path = tools/net_config
+	url = https://github.com/booyaa-nw/net_config.git
