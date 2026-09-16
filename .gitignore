@@ -1,5 +1,6 @@
 # --- local ---
 booyaa_log/
+Claude outputs/
 
 # --- Windows ---
 Thumbs.db
