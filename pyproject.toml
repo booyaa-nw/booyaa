@@ -3,10 +3,32 @@ name = "booyaa"
 version = "0.1.0"
 description = "NWエンジニア用ツール群 - uv workspace ルート"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "icmplib>=3.0.4",
+]
 
 [tool.uv.workspace]
 members = ["tools/*"]
 
 [tool.uv]
 package = false
+
+[tool.pytest.ini_options]
+# 各tools/<name>配下のtests/にはpytest収集用の`__init__.py`があるツール(net_config/config_backup等)と
+# 無いツール(common/ipcalc/mping等)が混在しており、ワークスペースルートから`uv run pytest`を実行すると
+# デフォルトのimport-mode(prepend)ではモジュール名`tests`がツール間で衝突する
+# (先に収集されたツールの`tests`パッケージが`sys.modules`に登録され、後続ツールの
+# 同名でないテストファイルが `ModuleNotFoundError: No module named 'tests.<file>'` として
+# 見つからなくなる)。また`__init__.py`が無いツール同士でも、同じベース名のテストファイル
+# (例: 複数ツールの`test_cli.py`)が"import file mismatch"エラーになる。
+# `--import-mode=importlib`は各テストファイルをファイルパスに基づく一意な名前でインポートするため、
+# ツール間のディレクトリ構成の違いに関わらずこれらの衝突を回避できる(2026-09-22発見・対応)。
+# `--ignore="Claude outputs"`: 命名規則違反の既知の残骸ディレクトリ(operations/tool-registry.md記載、
+# 未installの`parse`パッケージに依存する古い実験コードが残っている)をテスト収集対象から除外する。
+# `--basetemp=.pytest_tmp`: 各ツール(common/mping/config_backup等)は`tmp_path`系フィクスチャの
+# 生成先をリポジトリ直下の作業用ディレクトリに固定する対策を個別の`pyproject.toml`に持っていたが、
+# ワークスペースルートから`uv run pytest`を実行すると読み込まれるのはルートのこのファイルのみで、
+# 各ツール側の設定は一切適用されない。そのため、Windows既定の`%TEMP%\\pytest-of-<user>`への
+# アクセス権限問題(既知、tool-registry.md記載)がここでも再発し、`tmp_path`を使う全ツールの
+# テストが`PermissionError`で軒並みエラーになっていた(2026-09-22発見・対応)。
+addopts = '--import-mode=importlib --ignore="Claude outputs" --basetemp=.pytest_tmp'
