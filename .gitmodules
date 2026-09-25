@@ -13,3 +13,6 @@
 [submodule "tools/config_backup"]
 	path = tools/config_backup
 	url = https://github.com/booyaa-nw/config_backup.git
+[submodule "tools/config_parser"]
+	path = tools/config_parser
+	url = https://github.com/booyaa-nw/config_parser.git
