@@ -9,6 +9,7 @@ ping・IPアドレス計算・NW機器のコンフィグバックアップなど
 | `mping` | 複数宛先へ同時にpingを実行し、結果をリアルタイム表示・CSVログ出力する |
 | `ipcalc` | IPv4 / IPv6 のアドレス・マスクからネットワーク情報を計算する |
 | `config_backup` | NW機器（FortiGate / Managed Switch / FortiAnalyzer / Alaxala AX3000）のコンフィグ・システムバックアップ・TAC reportを取得する |
+| `config_parser` | FortiGateのコンフィグファイル(.conf)をパースしてExcel/JSONに変換する（`config_parser fgt <file>`） |
 
 各コマンドの詳しい使い方は `tools/<ツール名>/README.md` を参照してください。
 
@@ -104,6 +105,7 @@ $env:PATH = "C:\opt\booyaa\bin\windows;$env:PATH"
 ipcalc 172.16.201.10/24
 mping 8.8.8.8
 config_backup --help
+config_parser --help
 ```
 
 `mping` は `Ctrl+C` で終了します。
@@ -162,6 +164,7 @@ export PATH="$HOME/.local/booyaa/bin/linux:$PATH"
 ipcalc 172.16.201.10/24
 mping 8.8.8.8
 config_backup --help
+config_parser --help
 ```
 
 ---
