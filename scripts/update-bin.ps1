@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     ./bin 配下に、各ツールのCLIコマンドを呼び出す薄い起動シムを再生成する（Windows/Linux両対応）。

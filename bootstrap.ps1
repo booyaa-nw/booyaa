@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     booyaa プロジェクトの初回セットアップ / 再構築スクリプト。

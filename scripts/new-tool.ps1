@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     新規ツールを GitHub 上に作成し、submodule として追加、雛形を配置する。
