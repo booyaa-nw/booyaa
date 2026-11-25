@@ -1,0 +1,10 @@
+# policy_check などAPIを使うツールの接続情報ファイル。
+# このファイルを ".fginfo" という名前でコピーし、値を書き換えて使用してください。
+# (.fginfo は .gitignore 対象のためコミットされません)
+[fortigate]
+host = 192.0.2.1
+api_key = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# 以下は省略可
+# port = 443
+# vdom = root
+# verify = false

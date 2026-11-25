@@ -10,6 +10,7 @@ ping・IPアドレス計算・NW機器のコンフィグバックアップなど
 | `ipcalc` | IPv4 / IPv6 のアドレス・マスクからネットワーク情報を計算する |
 | `config_backup` | NW機器（FortiGate / Managed Switch / FortiAnalyzer / Alaxala AX3000）のコンフィグ・システムバックアップ・TAC reportを取得する |
 | `config_parser` | FortiGateのコンフィグファイル(.conf)をパースしてExcel/JSONに変換する（`config_parser fgt <file>`） |
+| `policy_check` | FortiGateのpolicy lookup APIで送信元セグメント×宛先をフルメッシュ照合し、結果をCSV出力する（要 `.fginfo`） |
 
 各コマンドの詳しい使い方は `tools/<ツール名>/README.md` を参照してください。
 
@@ -106,6 +107,7 @@ ipcalc 172.16.201.10/24
 mping 8.8.8.8
 config_backup --help
 config_parser --help
+policy_check --help
 ```
 
 `mping` は `Ctrl+C` で終了します。
@@ -167,6 +169,17 @@ config_backup --help
 config_parser --help
 ```
 
+### API を使うツールの接続情報（`.fginfo`）
+
+`policy_check` など FortiGate の REST API を使うツールは、インストール先直下の `.fginfo` から
+接続先と API キーを読み込みます。`.fginfo.sample` をコピーして作成してください
+（`.fginfo` は git 管理外です）。
+
+```powershell
+Copy-Item .fginfo.sample .fginfo
+notepad .fginfo
+```
+
 ---
 
 ## アップデート
@@ -203,6 +216,7 @@ bash ./bootstrap.sh
 | `mping` | `./booyaa_log/ping/` |
 | `config_backup`（FortiGate / FortiAnalyzer / Alaxala） | `./booyaa_log/config/` |
 | `config_backup`（Managed Switch） | `./booyaa_log/config/<FortiGateのホスト名>_msw/` |
+| `policy_check` | `./<FortiGateのhost>_policy_check_<日時>.csv`（カレントディレクトリ直下） |
 
 作業フォルダに移動してから実行すると、結果がその場所にまとまります。保存先は各コマンドのオプションでも変更できます。
 

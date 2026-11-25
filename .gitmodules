@@ -16,3 +16,6 @@
 [submodule "tools/config_parser"]
 	path = tools/config_parser
 	url = https://github.com/booyaa-nw/config_parser.git
+[submodule "tools/policy_check"]
+	path = tools/policy_check
+	url = https://github.com/booyaa-nw/policy_check.git
