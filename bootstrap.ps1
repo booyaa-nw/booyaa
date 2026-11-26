@@ -63,7 +63,19 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     exit 1
 }
 
-$installedList = uv python list --only-installed 2>$null
+# 注意: Windows PowerShell 5.1 では $ErrorActionPreference = "Stop" の状態で
+# ネイティブコマンドの stderr をリダイレクトすると (2>$null でも)、stderr の各行が
+# NativeCommandError として扱われスクリプトが停止する。uv はレジストリ上の壊れた
+# インタプリタ登録等で warning を stderr に出すことがあるため、この呼び出しの間だけ
+# Continue に戻す。
+$prevErrorActionPreference = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+try {
+    $installedList = uv python list --only-installed 2>$null
+}
+finally {
+    $ErrorActionPreference = $prevErrorActionPreference
+}
 $isInstalled = $installedList | Where-Object { $_ -match [Regex]::Escape($pyVersion) }
 
 if (-not $isInstalled) {

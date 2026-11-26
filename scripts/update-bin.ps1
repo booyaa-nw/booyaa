@@ -152,7 +152,16 @@ foreach ($name in $commands.Keys) {
 
     # モジュールが実際にimport可能か軽く確認する（タイプミス・未syncの検出のため）。
     # エラー内容は握りつぶさず表示する（原因調査のため）。
-    $importError = & $venvPython -c "import importlib; importlib.import_module('$module')" 2>&1
+    # PS 5.1 では EAP=Stop のまま 2>&1 すると stderr が NativeCommandError となり停止するため、
+    # この呼び出しの間だけ Continue にする（import失敗を警告として扱えるようにするため）。
+    $prevErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try {
+        $importError = & $venvPython -c "import importlib; importlib.import_module('$module')" 2>&1
+    }
+    finally {
+        $ErrorActionPreference = $prevErrorActionPreference
+    }
     if ($LASTEXITCODE -ne 0) {
         Write-Warning "  '$name' (module: $module) が import できません（'uv sync' 未実施、または実装側の不備の可能性）。スキップします。"
         $importError | ForEach-Object { Write-Warning "    $_" }
